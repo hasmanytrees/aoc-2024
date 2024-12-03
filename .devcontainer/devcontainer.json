@@ -1,4 +1,11 @@
 {
-    "name": "AL2023-Test",
-    "image": "ghcr.io/hasmanytrees/al2023-devcon:latest",
+    "name": "Go Dev Container",
+    "dockerFile": "Dockerfile",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.Go"
+            ]
+        }
+    }
 }

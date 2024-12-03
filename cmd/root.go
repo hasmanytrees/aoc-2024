@@ -24,11 +24,11 @@ func Execute() {
 	}
 }
 
-func NewStarCommand(name string, solve func(string)) *cobra.Command {
+func NewStarCommand(name string, star func(string)) *cobra.Command {
 	var starCmd = &cobra.Command{
 		Use: name,
 		Run: func(cmd *cobra.Command, args []string) {
-			solve(*inputFile)
+			star(*inputFile)
 		},
 	}
 
