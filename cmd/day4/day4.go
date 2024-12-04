@@ -6,11 +6,8 @@ import (
 	"hasmanytrees.com/aoc-2024/cmd"
 )
 
-var d *cmd.Day
-
 func init() {
-	d = cmd.NewDay("day4", star1, star2)
-	d.Init()
+	cmd.AddDay("day4", star1, star2)
 }
 
 type board struct {

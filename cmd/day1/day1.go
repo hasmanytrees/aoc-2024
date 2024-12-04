@@ -8,11 +8,8 @@ import (
 	"hasmanytrees.com/aoc-2024/cmd"
 )
 
-var d *cmd.Day
-
 func init() {
-	d = cmd.NewDay("day1", star1, star2)
-	d.Init()
+	cmd.AddDay("day1", star1, star2)
 }
 
 func sortedInsert[T cmp.Ordered](ts []T, t T) []T {
