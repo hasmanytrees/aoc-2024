@@ -44,3 +44,62 @@ func abs(i int) int {
 
 	return i
 }
+
+type direction int
+
+const (
+	Increasing direction = iota
+	Decreasing
+)
+
+func getDirection(levels []int) direction {
+	var result direction
+	prev := levels[0]
+
+	for i := 1; i < len(levels); i++ {
+		curr := levels[i]
+
+		if prev == curr {
+			continue
+		}
+
+		if curr-prev > 0 {
+			result = Increasing
+			break
+		} else {
+			result = Decreasing
+			break
+		}
+	}
+
+	return result
+}
+
+func areLevelsSafe(levels []int) bool {
+	prev := levels[0]
+	direction := getDirection(levels)
+
+	for i := 1; i < len(levels); i++ {
+		curr := levels[i]
+		diff := curr - prev
+
+		if diff == 0 {
+			return false
+		} else {
+			if diff > 0 && direction != Increasing {
+				return false
+			}
+			if diff < 0 && direction != Decreasing {
+				return false
+			}
+		}
+
+		if abs(diff) > 3 {
+			return false
+		}
+
+		prev = curr
+	}
+
+	return true
+}
