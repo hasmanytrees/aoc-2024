@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# insert new blank import into main.go
+sed -i 's/\t\/\/ SIP/\t_ \"hasmanytrees.com\/aoc-2024\/cmd\/'"$1"'\"\n	\/\/ SIP/' main.go
+
 # copy the dayX template folder into the user specified day
 cp -r ./cmd/dayX ./cmd/$1
 

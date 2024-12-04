@@ -9,9 +9,6 @@ To create a new day, execute `newday.sh` passing in the name of the day you wish
 ❯ ./newday.sh day1
 ```
 
-To add the new subcommand to the CLI app, import your new day package in `main.go` using a blank import.
-
-
 ## Execution
 To execute your new star solver build and run the CLI specifying the day name, star name and input file location:
 
