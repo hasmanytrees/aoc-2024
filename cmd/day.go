@@ -16,7 +16,7 @@ func NewDay(name string, star1 func(string), star2 func(string)) *Day {
 	}
 }
 
-func NewStarCommand(name string, star func(string)) *cobra.Command {
+func newStarCommand(name string, star func(string)) *cobra.Command {
 	var starCmd = &cobra.Command{
 		Use: name,
 		Run: func(cmd *cobra.Command, args []string) {
@@ -34,6 +34,6 @@ func (d *Day) Init() {
 
 	rootCmd.AddCommand(dayCmd)
 
-	dayCmd.AddCommand(NewStarCommand("star1", d.star1))
-	dayCmd.AddCommand(NewStarCommand("star2", d.star2))
+	dayCmd.AddCommand(newStarCommand("star1", d.star1))
+	dayCmd.AddCommand(newStarCommand("star2", d.star2))
 }
