@@ -23,14 +23,3 @@ func Execute() {
 		os.Exit(1)
 	}
 }
-
-func NewStarCommand(name string, star func(string)) *cobra.Command {
-	var starCmd = &cobra.Command{
-		Use: name,
-		Run: func(cmd *cobra.Command, args []string) {
-			star(*inputFile)
-		},
-	}
-
-	return starCmd
-}
