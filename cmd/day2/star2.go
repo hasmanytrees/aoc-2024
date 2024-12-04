@@ -26,8 +26,7 @@ func star2(inputFile string) {
 			numSafeReports++
 		} else {
 			for i := 0; i < len(levels); i++ {
-				newLevels := append([]int{}, levels[:i]...)
-				newLevels = append(newLevels, levels[i+1:]...)
+				newLevels := append(append([]int{}, levels[:i]...), levels[i+1:]...)
 
 				if areLevelsSafe(newLevels) {
 					numSafeReports++
