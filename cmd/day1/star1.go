@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 )
 
 func star1(inputFile string) {
@@ -22,12 +21,12 @@ func star1(inputFile string) {
 	right := []int{}
 
 	for scanner.Scan() {
-		a := scanner.Text()
+		line := scanner.Text()
 
-		nums := scanNums(a)
+		nums := scanNums(line)
 
-		left = Insert(left, nums[0])
-		right = Insert(right, nums[1])
+		left = sortedInsert(left, nums[0])
+		right = sortedInsert(right, nums[1])
 	}
 
 	for i := 0; i < len(left); i++ {
@@ -35,36 +34,4 @@ func star1(inputFile string) {
 	}
 
 	fmt.Printf("Distance = %v\n", distance)
-}
-
-func scanNums(s string) []int {
-	i := 0
-	j := 0
-	values := []int{0}
-
-	for i = 0; i < len(s); i++ {
-		if s[i] == ' ' {
-			values = append(values, 0)
-			j++
-
-			for ; i < len(s); i++ {
-				if s[i] != ' ' {
-					break
-				}
-			}
-		}
-
-		v, _ := strconv.Atoi(string(s[i]))
-		values[j] = values[j]*10 + v
-	}
-
-	return values
-}
-
-func abs(i int) int {
-	if i < 0 {
-		return -i
-	}
-
-	return i
 }
