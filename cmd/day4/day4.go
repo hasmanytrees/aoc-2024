@@ -1,6 +1,10 @@
 package day4
 
-import "hasmanytrees.com/aoc-2024/cmd"
+import (
+	"fmt"
+
+	"hasmanytrees.com/aoc-2024/cmd"
+)
 
 var d *cmd.Day
 
@@ -210,6 +214,37 @@ func (b *board) find(term string) int {
 			if b.searchNW(term, x, y) {
 				result++
 			}
+		}
+	}
+
+	return result
+}
+
+func (b *board) findCrosses(term string) int {
+	result := 0
+
+	locations := map[string]int{}
+
+	for y := range b.lines {
+		for x := range b.lines[y] {
+			if b.searchNE(term, x, y) {
+				locations[fmt.Sprintf("%v,%v", x+1, y-1)]++
+			}
+			if b.searchSE(term, x, y) {
+				locations[fmt.Sprintf("%v,%v", x+1, y+1)]++
+			}
+			if b.searchSW(term, x, y) {
+				locations[fmt.Sprintf("%v,%v", x-1, y+1)]++
+			}
+			if b.searchNW(term, x, y) {
+				locations[fmt.Sprintf("%v,%v", x-1, y-1)]++
+			}
+		}
+	}
+
+	for _, v := range locations {
+		if v > 1 {
+			result++
 		}
 	}
 
