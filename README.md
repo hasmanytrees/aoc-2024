@@ -10,7 +10,7 @@ To create a new day, execute `newday.sh` passing in the name of the day you wish
 ```
 
 ## Execution
-To execute your new star solver build and run the CLI specifying the day name, star name and input file location:
+To execute your new star solver, build and run the CLI specifying the day name, star name and input file location:
 
 ```
 ❯ go build
