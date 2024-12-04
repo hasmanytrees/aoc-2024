@@ -23,6 +23,7 @@ func Execute() {
 		os.Exit(1)
 	}
 }
+
 func AddDay(name string, star1 func(string), star2 func(string)) {
 	var dayCmd = &cobra.Command{
 		Use: name,

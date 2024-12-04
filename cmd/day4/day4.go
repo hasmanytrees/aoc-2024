@@ -1,7 +1,9 @@
 package day4
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	"hasmanytrees.com/aoc-2024/cmd"
 )
@@ -246,4 +248,60 @@ func (b *board) findCrosses(term string) int {
 	}
 
 	return result
+}
+
+func star1(inputFile string) {
+	input, err := os.Open(inputFile)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer input.Close()
+
+	scanner := bufio.NewScanner(input)
+
+	term := "XMAS"
+
+	lines := []string{}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		lines = append(lines, line)
+	}
+
+	b := &board{
+		lines,
+	}
+
+	result := b.find(term)
+
+	fmt.Printf("Result = %v\n", result)
+}
+
+func star2(inputFile string) {
+	input, err := os.Open(inputFile)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer input.Close()
+
+	scanner := bufio.NewScanner(input)
+
+	term := "MAS"
+
+	lines := []string{}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		lines = append(lines, line)
+	}
+
+	b := &board{
+		lines,
+	}
+
+	result := b.findCrosses(term)
+
+	fmt.Printf("Result = %v\n", result)
 }

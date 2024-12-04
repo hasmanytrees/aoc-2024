@@ -1,7 +1,10 @@
 package day1
 
 import (
+	"bufio"
 	"cmp"
+	"fmt"
+	"os"
 	"slices"
 	"strconv"
 
@@ -49,4 +52,70 @@ func abs(i int) int {
 	}
 
 	return i
+}
+
+func star1(inputFile string) {
+	input, err := os.Open(inputFile)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer input.Close()
+
+	scanner := bufio.NewScanner(input)
+
+	distance := 0
+
+	left := []int{}
+	right := []int{}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		nums := scanNums(line)
+
+		left = sortedInsert(left, nums[0])
+		right = sortedInsert(right, nums[1])
+	}
+
+	for i := 0; i < len(left); i++ {
+		distance += abs(left[i] - right[i])
+	}
+
+	fmt.Printf("Distance = %v\n", distance)
+}
+
+func star2(inputFile string) {
+	input, err := os.Open(inputFile)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer input.Close()
+
+	scanner := bufio.NewScanner(input)
+
+	similarity := 0
+
+	left := []int{}
+	right := []int{}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		nums := scanNums(line)
+
+		left = append(left, nums[0])
+		right = append(right, nums[1])
+	}
+
+	rightMap := map[int]int{}
+
+	for _, r := range right {
+		rightMap[r]++
+	}
+
+	for i := 0; i < len(left); i++ {
+		similarity += left[i] * rightMap[left[i]]
+	}
+
+	fmt.Printf("Similarity = %v\n", similarity)
 }
