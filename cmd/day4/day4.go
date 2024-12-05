@@ -15,6 +15,20 @@ type board struct {
 	lines []string
 }
 
+func newBoard(scanner *bufio.Scanner) *board {
+	b := &board{
+		lines: []string{},
+	}
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		b.lines = append(b.lines, line)
+	}
+
+	return b
+}
+
 func (b *board) inBounds(x, y int) bool {
 	return x >= 0 && x < len(b.lines[0]) && y >= 0 && y < len(b.lines)
 }
@@ -144,17 +158,7 @@ func (b *board) findCrosses(term string) int {
 func star1(scanner *bufio.Scanner) {
 	term := "XMAS"
 
-	lines := []string{}
-
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		lines = append(lines, line)
-	}
-
-	b := &board{
-		lines,
-	}
+	b := newBoard(scanner)
 
 	result := b.find(term)
 
@@ -164,17 +168,7 @@ func star1(scanner *bufio.Scanner) {
 func star2(scanner *bufio.Scanner) {
 	term := "MAS"
 
-	lines := []string{}
-
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		lines = append(lines, line)
-	}
-
-	b := &board{
-		lines,
-	}
+	b := newBoard(scanner)
 
 	result := b.findCrosses(term)
 
