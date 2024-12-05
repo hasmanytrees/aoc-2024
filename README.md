@@ -9,6 +9,8 @@ To create a new day, execute `newday.sh` passing in the name of the day you wish
 ❯ ./newday.sh day1
 ```
 
+The subcommand for the newly created day will be located under the `cmd` folder.
+
 ## Execution
 To execute your new star solver, build and run the CLI specifying the day name, star name and input file location:
 
