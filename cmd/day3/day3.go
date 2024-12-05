@@ -3,7 +3,6 @@ package day3
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 
@@ -14,15 +13,7 @@ func init() {
 	cmd.AddDay("day3", star1, star2)
 }
 
-func star1(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star1(scanner *bufio.Scanner) {
 	r, _ := regexp.Compile(`mul\((\d+),(\d+)\)`)
 
 	result := 0
@@ -43,15 +34,7 @@ func star1(inputFile string) {
 	fmt.Printf("Result = %v\n", result)
 }
 
-func star2(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star2(scanner *bufio.Scanner) {
 	r, _ := regexp.Compile(`(mul\((\d+),(\d+)\))|(do\(\))|(don't\(\))`)
 
 	result := 0

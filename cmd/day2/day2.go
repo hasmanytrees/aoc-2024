@@ -3,7 +3,6 @@ package day2
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
@@ -94,15 +93,7 @@ func areLevelsSafe(levels []int) bool {
 	return true
 }
 
-func star1(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star1(scanner *bufio.Scanner) {
 	numSafeReports := 0
 
 	for scanner.Scan() {
@@ -118,15 +109,7 @@ func star1(inputFile string) {
 	fmt.Printf("# Safe Reports = %v\n", numSafeReports)
 }
 
-func star2(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star2(scanner *bufio.Scanner) {
 	numSafeReports := 0
 
 	for scanner.Scan() {

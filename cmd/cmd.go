@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -23,7 +24,7 @@ func Execute() {
 	}
 }
 
-func AddDay(name string, star1 func(string), star2 func(string)) {
+func AddDay(name string, star1 func(*bufio.Scanner), star2 func(*bufio.Scanner)) {
 	var dayCmd = &cobra.Command{
 		Use: name,
 	}
@@ -34,11 +35,21 @@ func AddDay(name string, star1 func(string), star2 func(string)) {
 	dayCmd.AddCommand(newStarCommand("star2", star2))
 }
 
-func newStarCommand(name string, star func(string)) *cobra.Command {
+func newStarCommand(name string, star func(*bufio.Scanner)) *cobra.Command {
 	var starCmd = &cobra.Command{
 		Use: name,
-		Run: func(cmd *cobra.Command, args []string) {
-			star(*inputFile)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			input, err := os.Open(*inputFile)
+			if err != nil {
+				return err
+			}
+			defer input.Close()
+
+			scanner := bufio.NewScanner(input)
+
+			star(scanner)
+
+			return nil
 		},
 	}
 

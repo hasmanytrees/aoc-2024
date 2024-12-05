@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"cmp"
 	"fmt"
-	"os"
 	"slices"
 	"strconv"
 	"strings"
@@ -44,15 +43,7 @@ func abs(i int) int {
 	return i
 }
 
-func star1(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star1(scanner *bufio.Scanner) {
 	distance := 0
 
 	left := []int{}
@@ -74,15 +65,7 @@ func star1(inputFile string) {
 	fmt.Printf("Distance = %v\n", distance)
 }
 
-func star2(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star2(scanner *bufio.Scanner) {
 	similarity := 0
 
 	left := []int{}

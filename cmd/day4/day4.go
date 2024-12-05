@@ -3,7 +3,6 @@ package day4
 import (
 	"bufio"
 	"fmt"
-	"os"
 
 	"hasmanytrees.com/aoc-2024/cmd"
 )
@@ -32,11 +31,6 @@ func (b *board) search(term string, x, y int, dx, dy int) bool {
 	result := true
 
 	for i := 0; i < len(term); i++ {
-		if !b.inBounds(x, y) {
-			result = false
-			break
-		}
-
 		if term[i] != b.value(x, y) {
 			result = false
 			break
@@ -147,15 +141,7 @@ func (b *board) findCrosses(term string) int {
 	return result
 }
 
-func star1(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star1(scanner *bufio.Scanner) {
 	term := "XMAS"
 
 	lines := []string{}
@@ -175,15 +161,7 @@ func star1(inputFile string) {
 	fmt.Printf("Result = %v\n", result)
 }
 
-func star2(inputFile string) {
-	input, err := os.Open(inputFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer input.Close()
-
-	scanner := bufio.NewScanner(input)
-
+func star2(scanner *bufio.Scanner) {
 	term := "MAS"
 
 	lines := []string{}
