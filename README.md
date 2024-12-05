@@ -14,5 +14,5 @@ To execute your new star solver, build and run the CLI specifying the day name, 
 
 ```
 ❯ go build
-❯ aoc-2024 day1 star1 --if cmd/day1/input.txt
+❯ ./aoc-2024 day1 star1 --if cmd/day1/input.txt
 ```
