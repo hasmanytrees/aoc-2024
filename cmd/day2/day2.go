@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	"hasmanytrees.com/aoc-2024/cmd"
 )
@@ -14,27 +15,16 @@ func init() {
 }
 
 func scanNums(s string) []int {
-	i := 0
-	j := 0
-	values := []int{0}
+	nums := []int{}
 
-	for i = 0; i < len(s); i++ {
-		if s[i] == ' ' {
-			values = append(values, 0)
-			j++
+	fields := strings.Fields(s)
 
-			for ; i < len(s); i++ {
-				if s[i] != ' ' {
-					break
-				}
-			}
-		}
-
-		v, _ := strconv.Atoi(string(s[i]))
-		values[j] = values[j]*10 + v
+	for _, field := range fields {
+		v, _ := strconv.Atoi(field)
+		nums = append(nums, v)
 	}
 
-	return values
+	return nums
 }
 
 func abs(i int) int {

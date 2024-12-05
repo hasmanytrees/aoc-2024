@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -19,7 +18,7 @@ func Execute() {
 	rootCmd.MarkFlagRequired("if")
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		os.Exit(1)
 	}
 }
