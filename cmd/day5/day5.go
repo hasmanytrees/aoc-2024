@@ -26,12 +26,12 @@ func scanNums(s string, sep string) []int {
 	return nums
 }
 
-func isUpdateInRightOrder(update []int, rulesMap map[int]map[int]bool) bool {
+func isUpdateInRightOrder(update []int, rules map[int]map[int]bool) bool {
 	result := true
 
 	for i := 0; i < len(update); i++ {
 		for j := i + 1; j < len(update); j++ {
-			if !rulesMap[update[i]][update[j]] {
+			if !rules[update[i]][update[j]] {
 				result = false
 				break
 			}
@@ -139,7 +139,7 @@ func star1(scanner *bufio.Scanner) {
 func star2(scanner *bufio.Scanner) {
 	result := 0
 
-	rulesMap := map[int]map[int]bool{}
+	rules := map[int]map[int]bool{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -147,11 +147,11 @@ func star2(scanner *bufio.Scanner) {
 		if len(line) != 0 {
 			nums := scanNums(line, "|")
 
-			if _, ok := rulesMap[nums[0]]; !ok {
-				rulesMap[nums[0]] = map[int]bool{}
+			if _, ok := rules[nums[0]]; !ok {
+				rules[nums[0]] = map[int]bool{}
 			}
 
-			rulesMap[nums[0]][nums[1]] = true
+			rules[nums[0]][nums[1]] = true
 		} else {
 			break
 		}
@@ -163,8 +163,8 @@ func star2(scanner *bufio.Scanner) {
 
 		update := scanNums(line, ",")
 
-		if !isUpdateInRightOrder(update, rulesMap) {
-			update = reorderUpdate(update, rulesMap)
+		if !isUpdateInRightOrder(update, rules) {
+			update = reorderUpdate(update, rules)
 			result += update[len(update)/2]
 		}
 	}
