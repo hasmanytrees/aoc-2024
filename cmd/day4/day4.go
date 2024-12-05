@@ -28,160 +28,57 @@ func (b *board) value(x, y int) byte {
 	return b.lines[y][x]
 }
 
+func (b *board) search(term string, x, y int, dx, dy int) bool {
+	result := true
+
+	for i := 0; i < len(term); i++ {
+		if !b.inBounds(x, y) {
+			result = false
+			break
+		}
+
+		if term[i] != b.value(x, y) {
+			result = false
+			break
+		}
+
+		x += dx
+		y += dy
+	}
+
+	return result
+}
+
 func (b *board) searchN(term string, x, y int) bool {
-	result := false
-
-	if b.inBounds(x, y) && y >= len(term)-1 {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			y--
-		}
-	}
-
-	return result
-}
-
-func (b *board) searchS(term string, x, y int) bool {
-	result := false
-
-	if b.inBounds(x, y) && y <= len(b.lines)-len(term) {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			y++
-		}
-	}
-
-	return result
-}
-
-func (b *board) searchE(term string, x, y int) bool {
-	result := false
-
-	if b.inBounds(x, y) && x <= len(b.lines[0])-len(term) {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x++
-		}
-	}
-
-	return result
-}
-
-func (b *board) searchW(term string, x, y int) bool {
-	result := false
-
-	if b.inBounds(x, y) && x >= len(term)-1 {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x--
-		}
-	}
-
-	return result
+	return b.search(term, x, y, 0, -1)
 }
 
 func (b *board) searchNE(term string, x, y int) bool {
-	result := false
+	return b.search(term, x, y, 1, -1)
+}
 
-	if b.inBounds(x, y) && x <= len(b.lines[0])-len(term) && y >= len(term)-1 {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x++
-			y--
-		}
-	}
-
-	return result
+func (b *board) searchE(term string, x, y int) bool {
+	return b.search(term, x, y, 1, 0)
 }
 
 func (b *board) searchSE(term string, x, y int) bool {
-	result := false
+	return b.search(term, x, y, 1, 1)
+}
 
-	if b.inBounds(x, y) && x <= len(b.lines[0])-len(term) && y <= len(b.lines)-len(term) {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x++
-			y++
-		}
-	}
-
-	return result
+func (b *board) searchS(term string, x, y int) bool {
+	return b.search(term, x, y, 0, 1)
 }
 
 func (b *board) searchSW(term string, x, y int) bool {
-	result := false
+	return b.search(term, x, y, -1, 1)
+}
 
-	if b.inBounds(x, y) && x >= len(term)-1 && y <= len(b.lines)-len(term) {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x--
-			y++
-		}
-	}
-
-	return result
+func (b *board) searchW(term string, x, y int) bool {
+	return b.search(term, x, y, -1, 0)
 }
 
 func (b *board) searchNW(term string, x, y int) bool {
-	result := false
-
-	if b.inBounds(x, y) && x >= len(term)-1 && y >= len(term)-1 {
-		result = true
-
-		for i := 0; i < len(term); i++ {
-			if term[i] != b.value(x, y) {
-				result = false
-				break
-			}
-
-			x--
-			y--
-		}
-	}
-
-	return result
+	return b.search(term, x, y, -1, -1)
 }
 
 func (b *board) find(term string) int {
