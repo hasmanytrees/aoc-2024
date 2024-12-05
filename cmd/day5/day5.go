@@ -49,7 +49,6 @@ func star1(scanner *bufio.Scanner) {
 	result := 0
 
 	rules := map[string]bool{}
-	updates := [][]int{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -65,10 +64,8 @@ func star1(scanner *bufio.Scanner) {
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		updates = append(updates, scanNums(line))
-	}
+		update := scanNums(line)
 
-	for _, update := range updates {
 		if isUpdateInRightOrder(update, rules) {
 			result += update[len(update)/2]
 		}
