@@ -7,6 +7,7 @@ import (
 	_ "hasmanytrees.com/aoc-2024/cmd/day3"
 	_ "hasmanytrees.com/aoc-2024/cmd/day4"
 	_ "hasmanytrees.com/aoc-2024/cmd/day5"
+	_ "hasmanytrees.com/aoc-2024/cmd/day6"
 	// SIP
 )
 
