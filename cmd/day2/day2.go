@@ -41,53 +41,32 @@ const (
 	Decreasing
 )
 
-func getDirection(levels []int) direction {
-	var result direction
-	prev := levels[0]
-
-	for i := 1; i < len(levels); i++ {
-		curr := levels[i]
-
-		if prev == curr {
-			continue
-		}
-
-		if curr-prev > 0 {
-			result = Increasing
-			break
-		} else {
-			result = Decreasing
-			break
-		}
+func getDirection(x, y int) direction {
+	if x < y {
+		return Increasing
 	}
 
-	return result
+	return Decreasing
 }
 
 func areLevelsSafe(levels []int) bool {
-	prev := levels[0]
-	direction := getDirection(levels)
+	prevLevel := levels[0]
+	prevDirection := getDirection(levels[0], levels[1])
+
+	var currLevel int
+	var currDirection direction
 
 	for i := 1; i < len(levels); i++ {
-		curr := levels[i]
-		diff := curr - prev
+		currLevel = levels[i]
+		currDirection = getDirection(prevLevel, currLevel)
 
-		if diff == 0 {
-			return false
-		} else {
-			if diff > 0 && direction != Increasing {
-				return false
-			}
-			if diff < 0 && direction != Decreasing {
-				return false
-			}
-		}
+		diff := abs(currLevel - prevLevel)
 
-		if abs(diff) > 3 {
+		if currDirection != prevDirection || diff < 1 || diff > 3 {
 			return false
 		}
 
-		prev = curr
+		prevLevel = currLevel
 	}
 
 	return true
