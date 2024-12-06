@@ -12,9 +12,9 @@ To create a new day, execute `newday.sh` passing in the name of the day you wish
 The subcommand for the newly created day will be located under the `cmd` folder.
 
 ## Execution
-To execute your new star solver, build and run the CLI specifying the day name, star name and input file location:
+To execute your new star solver, build and run the CLI specifying the day name subcommand, star name subcommand, and input file param (`--if` which will be sourced from the day subcommand folder):
 
 ```
 ❯ go build
-❯ ./aoc-2024 day1 star1 --if cmd/day1/input.txt
+❯ ./aoc-2024 day1 star1 --if input.txt
 ```

@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"bufio"
+	"fmt"
 	"os"
+	"path"
 
 	"github.com/spf13/cobra"
 )
@@ -31,15 +33,15 @@ func AddDay(name string, star1 func(*bufio.Scanner), star2 func(*bufio.Scanner))
 
 	rootCmd.AddCommand(dayCmd)
 
-	dayCmd.AddCommand(newStarCommand("star1", star1))
-	dayCmd.AddCommand(newStarCommand("star2", star2))
+	dayCmd.AddCommand(newStarCommand("star1", star1, fmt.Sprintf("cmd/%v/", name)))
+	dayCmd.AddCommand(newStarCommand("star2", star2, fmt.Sprintf("cmd/%v/", name)))
 }
 
-func newStarCommand(name string, star func(*bufio.Scanner)) *cobra.Command {
+func newStarCommand(name string, star func(*bufio.Scanner), inputFolder string) *cobra.Command {
 	var starCmd = &cobra.Command{
 		Use: name,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			input, err := os.Open(*inputFile)
+			input, err := os.Open(path.Join(inputFolder, *inputFile))
 			if err != nil {
 				return err
 			}
