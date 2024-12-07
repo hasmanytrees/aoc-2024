@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	cmd.AddDay("day6a", star1, star2)
+	cmd.AddDay("day6", star1, star2)
 }
 
 type Point struct {
