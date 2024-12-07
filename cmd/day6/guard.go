@@ -1,99 +1,61 @@
 package day6
 
-import "fmt"
+import (
+	mapset "github.com/deckarep/golang-set/v2"
+)
 
-type guard struct {
-	direction       direction
-	startX, startY  int
-	x, y            int
-	history         map[string]direction
-	newObstructions map[string]bool
+type Guard struct {
+	lab     *Lab
+	start   Step
+	current Step
+	steps   mapset.Set[Step]
 }
 
-func newGuard(x, y int, d direction) *guard {
-	return &guard{
-		direction:       d,
-		startX:          x,
-		startY:          y,
-		x:               x,
-		y:               y,
-		history:         map[string]direction{},
-		newObstructions: map[string]bool{},
+func NewGuard(lab *Lab, x, y int) *Guard {
+	p := Point{x, y}
+	s := Step{p, Up}
+
+	steps := mapset.NewSet[Step]()
+	steps.Add(s)
+
+	return &Guard{
+		lab:     lab,
+		start:   s,
+		current: s,
+		steps:   steps,
 	}
 }
 
-func (g *guard) clone() *guard {
-	historyClone := map[string]direction{}
-
-	for k, v := range g.history {
-		historyClone[k] = v
-	}
-
-	newObstructionClone := map[string]bool{}
-
-	for k, v := range g.newObstructions {
-		newObstructionClone[k] = v
-	}
-
-	return &guard{
-		direction:       g.direction,
-		startX:          g.x,
-		startY:          g.y,
-		x:               g.x,
-		y:               g.y,
-		history:         historyClone,
-		newObstructions: newObstructionClone,
+func (g *Guard) clone() *Guard {
+	return &Guard{
+		lab:     g.lab,
+		start:   g.start,
+		current: g.current,
+		steps:   g.steps.Clone(),
 	}
 }
 
-func (g *guard) trackHistory() {
-	g.history[fmt.Sprintf("%v,%v", g.x, g.y)] |= g.direction
+func (g *Guard) inside() bool {
+	x := g.current.p.x
+	y := g.current.p.y
+
+	return x >= 0 && x < g.lab.width && y >= 0 && y < g.lab.height
 }
 
-func (g *guard) getHistoryAt(x, y int) (direction, bool) {
-	d, ok := g.history[fmt.Sprintf("%v,%v", x, y)]
-	return d, ok
-}
+func (g *Guard) move() bool {
+	next := g.current.p.next(g.current.d)
 
-func (g *guard) hasNewObstructionAt(x, y int) bool {
-	return g.newObstructions[fmt.Sprintf("%v,%v", x, y)]
-}
-
-func (g *guard) putNewObstructionAt(x, y int) {
-	g.newObstructions[fmt.Sprintf("%v,%v", x, y)] = true
-
-}
-
-func (g *guard) next() (x, y int) {
-	switch g.direction {
-	case Up:
-		return g.x, g.y - 1
-	case Right:
-		return g.x + 1, g.y
-	case Down:
-		return g.x, g.y + 1
-	default:
-		return g.x - 1, g.y
+	if g.lab.obstructions.Contains(next) {
+		g.current.d = g.current.d.turnRight()
+	} else {
+		g.current.p = next
 	}
-}
 
-func (g *guard) move() {
-	g.x, g.y = g.next()
-}
+	inside := g.inside()
 
-func (g *guard) nextDirection() direction {
-	switch g.direction {
-	case Up:
-		return Right
-	case Right:
-		return Down
-	case Down:
-		return Left
-	default:
-		return Up
+	if inside {
+		g.steps.Add(g.current)
 	}
-}
 
-func (g *guard) turn() {
-	g.direction = g.nextDirection()
+	return inside
 }
